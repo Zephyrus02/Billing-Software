@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Input Page</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body style=" margin: 5px;padding:0;">
+
+    <h2 class="marquee"><span><i>Enter the items you wish to purchase.</i></span></h2>
+
+    <div class="side center">
+        <img align="center" src="static/logo.jpg" alt="Logo" width="200" style="height:auto;display:block;padding-left: 30px;" /><br>
+        {% if isRegCust == 'Y' %}
+            <h3 class="Reg"><i>You are a registered customer</i></h3>
+        {% else %}
+            <h3 class="noReg"><i>You are not a registered customer</i></h3>
+        {% endif %}
+    </div>
+
+    <div class="side left" style="padding-top: 70px;">
+        <h3>Enter Item:</h3>
+        <form name="data" action="/bill" method="post">
+            <table class="table">
+                <tr class="table__header">
+                    <th class="table__cell">Item Code</th>
+                    <th class="table__cell">Quality</th>
+                    <th class="table__cell">Quantity</th>  
+                </tr>
+                <tr class="table__bottom">
+                    <td class="table__cell"><input type="text" name="code" maxlength="4" placeholder="Enter Item Code"></td>
+                    <td class="table__cell">
+                        <select name="quality">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </td>
+                    <td class="table__cell"><input type="text" name="quantity" placeholder="Enter Quantity"></td>
+                </tr>
+            </table>
+
+            <p>Would you like to add more items to your cart</p>
+            <input type="radio" name="add" id="Y" value="Y">
+            <label for="Y">Yes</label>
+            <input type="radio" name="add" id="N" value="N">
+            <label for="N">No</label>
+            
+            <input type="submit" value="Submit" class="button">
+        </form>
+    </div>
+    <div class="side right" style="padding-top: 70px;">
+        <h3>Your Cart:</h3>
+        <table class="table">
+            <tr class="table__header">
+                {% for header in headings %}
+                    <th class="table__cell">{{ header }}</th>
+                {% endfor %}
+            </tr>
+
+            {% for row in BillList %}
+                <tr class="table__row">
+                    {% for cell in row %}
+                        <td class="table__cell">{{ cell }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+</html>
